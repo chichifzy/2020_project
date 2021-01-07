@@ -1,0 +1,44 @@
+# coding=utf-8
+# This is a sample Python script.
+
+# Press ⌃R to execute it or replace it with your code.
+# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+
+import requests
+import sys
+import io
+from bs4 import BeautifulSoup
+url='https://maoyan.com/'
+
+headers = {
+         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36',
+}
+
+r = requests.get(url=url, headers=headers)
+r.encoding = 'utf-8'
+content = r.text
+# print(content)
+soup = BeautifulSoup(r.content,'html.parser')
+print('序号\t\t片名')
+num=1
+# result = soup.find_all('div','movie-title movie-title-padding')
+for i in soup.find_all('div','movie-title movie-title-padding'):
+    sys.stdout.write(str(num))
+    sys.stdout.write('\t\t')
+    num=num+1
+    print(i.string.encode('utf-8'))
+
+num=1
+result='排名\t\t片名'
+for i in soup.find_all('div','movie-title movie-title-padding'):
+    result=result+str(num)
+    result=result+'\t\t'
+    num=num+1
+    result=result+i.string.encode('utf-8')
+    result=result+'\n'
+fp=io.open('./data.text','wb+')
+fp.write(result)
+# print(soup.find_all('div','movie-title movie-title-padding',encoding='utf-8'))
+
+# fp=io.open('./data.text','w',encoding='utf-8')
+# fp.write(r.text)
