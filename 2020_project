@@ -5,6 +5,7 @@
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 
 import requests
+import datetime
 import sys
 import io
 from bs4 import BeautifulSoup
@@ -29,7 +30,8 @@ for i in soup.find_all('div','movie-title movie-title-padding'):
     print(i.string.encode('utf-8'))
 
 num=1
-result='排名\t\t片名'
+reault=str(datetime.datetime.now())
+result=reault+'\n排名\t\t片名\n'
 for i in soup.find_all('div','movie-title movie-title-padding'):
     result=result+str(num)
     result=result+'\t\t'
